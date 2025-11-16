@@ -4,6 +4,8 @@
 
 **Equipo:**
 - Yeng Lee Salas Jimenez
+- Flor Maribel Ku May
+- Jose Octavio Hernandez Tec
 
 **Grupo:** 4 E  
 **Programa:** DSM (Desarrollo de Software Multiplataforma)  
@@ -565,9 +567,9 @@ Grupo 4 E - DSM - 2025
 ## 👥 Contribuciones
 
 Este proyecto fue desarrollado en equipo por:
-- **Yeng Lee Salas Jimenez** - Implementación y documentación
-- **Nombre Integrante 2** - Pruebas y Depuración
-- **Nombre Integrante 3** - Documentación y Diseño
+- **Yeng Lee Salas Jimenez**
+- **Flor Maribel Ku May**
+- **Jose Octavio Hernandez Tec**
 
 ---
 
