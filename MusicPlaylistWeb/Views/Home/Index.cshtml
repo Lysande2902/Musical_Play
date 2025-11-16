@@ -1,0 +1,74 @@
+@model List<MusicPlaylistWeb.Models.Song>
+@{
+    ViewData["Title"] = "Playlist Musical";
+}
+
+<div class="info-box">
+    <div class="info-box-title">
+        <span class="info-box-icon">💻</span>
+        Tecnología: C# con ASP.NET Core MVC
+    </div>
+    <div class="info-box-content">
+        <strong>Lenguaje:</strong> C# 12 | <strong>Framework:</strong> ASP.NET Core 9.0 | <strong>Paradigma:</strong> POO (Programación Orientada a Objetos)<br>
+        <strong>Operación Actual:</strong> Imprimir elementos del árbol (Recorrido Inorden) - Muestra canciones ordenadas por ID
+    </div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-value">@ViewBag.TotalCanciones</div>
+        <div class="stat-label">Canciones Totales</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">@ViewBag.Altura</div>
+        <div class="stat-label">Niveles del Árbol</div>
+    </div>
+</div>
+
+<div class="card-header">
+    <h1>🎵 Mi Playlist</h1>
+    <a asp-action="Agregar" class="btn btn-primary">+ Agregar Canción</a>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="song-list">
+        @foreach (var song in Model)
+        {
+            <div class="song-item">
+                <div class="song-id">@song.Id</div>
+                <div class="song-info">
+                    <div class="song-title">@song.Titulo</div>
+                    <div class="song-artist">@song.Artista</div>
+                </div>
+                <div class="song-details">
+                    <span>⏱️ @song.DuracionFormateada</span>
+                    <span>
+                        <div class="popularity-bar">
+                            <div class="popularity-fill" style="width: @(song.Popularidad)%"></div>
+                        </div>
+                        @song.Popularidad%
+                    </span>
+                </div>
+                <div class="song-actions">
+                    <a asp-action="Buscar" asp-route-id="@song.Id" class="btn btn-secondary btn-small">👁️ Ver</a>
+                    <a asp-action="Editar" asp-route-id="@song.Id" class="btn btn-primary btn-small">✏️ Editar</a>
+                    <form asp-action="Eliminar" asp-route-id="@song.Id" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger btn-small" onclick="return confirm('⚠️ ¿Estás seguro de eliminar esta canción?\n\n' + '@song.Titulo' + ' - ' + '@song.Artista')">🗑️ Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+        <h3>No hay canciones en la playlist</h3>
+        <p>Agrega tu primera canción para comenzar</p>
+        <a asp-action="Agregar" class="btn btn-primary">Agregar Canción</a>
+    </div>
+}

@@ -1,0 +1,47 @@
+@model List<MusicPlaylistWeb.Models.Song>
+@{
+    ViewData["Title"] = "Top Populares";
+}
+
+<h1>🏆 Top Canciones Más Populares (Operación Libre 2)</h1>
+
+<div class="info-box">
+    <div class="info-box-title">
+        <span class="info-box-icon">🆕</span>
+        Operación 12: Top Canciones Más Populares (Operación Libre)
+    </div>
+    <div class="info-box-content">
+        <strong>Método C#:</strong> <code>ObtenerTopPopulares(int cantidad)</code> - Retorna <code>List&lt;Song&gt;</code><br>
+        <strong>Complejidad:</strong> O(n log n) | <strong>Bibliotecas:</strong> System.Linq (OrderByDescending, ThenBy, Take)<br>
+        <strong>Descripción:</strong> Obtiene las N canciones más populares ordenadas por popularidad descendente usando LINQ.
+    </div>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="song-list">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var song = Model[i];
+            <div class="song-item">
+                <div class="song-id" style="background: linear-gradient(135deg, var(--spotify-green), var(--spotify-dark-green)); border-radius: 8px; padding: 0.5rem;">
+                    #@(i + 1)
+                </div>
+                <div class="song-info">
+                    <div class="song-title">@song.Titulo</div>
+                    <div class="song-artist">@song.Artista</div>
+                </div>
+                <div class="song-details">
+                    <span>⏱️ @song.DuracionFormateada</span>
+                    <span style="color: var(--spotify-green); font-weight: bold;">⭐ @song.Popularidad%</span>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <h3>No hay canciones disponibles</h3>
+    </div>
+}

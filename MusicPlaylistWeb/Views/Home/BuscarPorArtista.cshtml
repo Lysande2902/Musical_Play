@@ -1,0 +1,53 @@
+@model List<MusicPlaylistWeb.Models.Song>
+@{
+    ViewData["Title"] = "Buscar por Artista";
+}
+
+<h1>🔍 Buscar por Artista (Operación Libre 1)</h1>
+
+<div class="info-box">
+    <div class="info-box-title">
+        <span class="info-box-icon">🆕</span>
+        Operación 11: Buscar por Artista (Operación Libre)
+    </div>
+    <div class="info-box-content">
+        <strong>Método C#:</strong> <code>BuscarPorArtista(string artista)</code> - Retorna <code>List&lt;Song&gt;</code><br>
+        <strong>Complejidad:</strong> O(n) | <strong>Bibliotecas:</strong> string.Contains(), string.ToLower()<br>
+        <strong>Descripción:</strong> Búsqueda parcial y case-insensitive. Recorre todo el árbol buscando coincidencias en el nombre del artista.
+    </div>
+</div>
+
+<div class="search-box">
+    <form asp-action="BuscarPorArtista" method="get" style="display: flex; gap: 1rem; width: 100%;">
+        <input type="text" class="form-control" name="artista" placeholder="Nombre del artista..." value="@ViewBag.Artista" />
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <h2>Resultados para "@ViewBag.Artista"</h2>
+    <div class="song-list">
+        @foreach (var song in Model)
+        {
+            <div class="song-item">
+                <div class="song-id">@song.Id</div>
+                <div class="song-info">
+                    <div class="song-title">@song.Titulo</div>
+                    <div class="song-artist">@song.Artista</div>
+                </div>
+                <div class="song-details">
+                    <span>⏱️ @song.DuracionFormateada</span>
+                    <span>⭐ @song.Popularidad%</span>
+                </div>
+            </div>
+        }
+    </div>
+}
+else if (!string.IsNullOrEmpty(ViewBag.Artista))
+{
+    <div class="empty-state">
+        <h3>No se encontraron canciones</h3>
+        <p>No hay canciones del artista "@ViewBag.Artista"</p>
+    </div>
+}

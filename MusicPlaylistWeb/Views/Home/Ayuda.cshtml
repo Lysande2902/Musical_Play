@@ -1,0 +1,263 @@
+@{
+    ViewData["Title"] = "Ayuda - Operaciones del ABB";
+}
+
+<h1>📚 Guía de Operaciones del Árbol Binario de Búsqueda</h1>
+
+<div class="info-box">
+    <div class="info-box-title">
+        <span class="info-box-icon">💻</span>
+        Lenguaje y Tecnologías
+    </div>
+    <div class="info-box-content">
+        <strong>Lenguaje:</strong> C# 12<br>
+        <strong>Framework:</strong> ASP.NET Core 9.0 MVC<br>
+        <strong>Paradigma:</strong> Programación Orientada a Objetos (POO)<br>
+        <strong>Bibliotecas:</strong> System.Collections.Generic (List, Queue), LINQ<br>
+        <strong>Métodos POO:</strong> Encapsulación, Herencia (IComparable), Polimorfismo (ToString, CompareTo)
+    </div>
+</div>
+
+<h2>🌳 Operaciones Básicas del ABB (1-10)</h2>
+
+<div class="operation-card">
+    <div class="operation-title">
+        <span class="operation-number">1</span>
+        Imprimir los elementos del árbol
+    </div>
+    <div class="operation-description">
+        <strong>Descripción:</strong> Muestra todas las canciones almacenadas en el árbol en orden ascendente por ID.<br>
+        <strong>Método C#:</strong> <code>RecorridoInorden()</code> - Retorna <code>List&lt;Song&gt;</code><br>
+        <strong>Complejidad:</strong> O(n) - Visita todos los nodos<br>
+        <strong>Ubicación:</strong> Página de Inicio
+    </div>
+    <span class="operation-type">Básica</span>
+</div>
+
+<div class="operation-card">
+    <div class="operation-title">
+        <span class="operation-number">2</span>
+        Buscar un elemento en el árbol
+    </div>
+    <div class="operation-description">
+        <strong>Descripción:</strong> Busca una canción específica por su ID único.<br>
+        <strong>Método C#:</strong> <code>Buscar(int id)</code> - Retorna <code>Song?</code><br>
+        <strong>Complejidad:</strong> O(log n) promedio, O(n) peor caso<br>
+        <strong>Ubicación:</strong> Página "Buscar"
+    </div>
+    <span class="operation-type">Básica</span>
+</div>
+
+<div class="operation-card">
+    <div class="operation-title">
+        <span class="operation-number">3</span>
+        Insertar un elemento en el árbol
+    </div>
+    <div class="operation-description">
+        <strong>Descripción:</strong> Agrega una nueva canción al árbol manteniendo la propiedad de ABB.<br>
+        <strong>Método C#:</strong> <code>Insertar(Song cancion)</code> - Retorna <code>bool</code><br>
+        <strong>Complejidad:</strong> O(log n) promedio, O(n) peor caso<br>
+        <strong>Ubicación:</strong> Página "Agregar Canción"<br>
+        <strong>Validaciones:</strong> ID único, datos válidos
+    </div>
+    <span class="operation-type">Básica</span>
+</div>
+
+<div class="operation-card">
+    <div class="operation-title">
+        <span class="operation-number">4</span>
+        Borrar un elemento del árbol
+    </div>
+    <div class="operation-description">
+        <strong>Descripción:</strong> Elimina una canción del árbol y reorganiza los nodos.<br>
+        <strong>Método C#:</strong> <code>Eliminar(int id)</code> - Retorna <code>bool</code><br>
+        <strong>Complejidad:</strong> O(log n) promedio, O(n) peor caso<br>
+        <strong>Ubicación:</strong> Botón "Eliminar" en cada canción<br>
+        <strong>Casos:</strong> Nodo sin hijos, con un hijo, con dos hijos
+    </div>
+    <span class="operation-type">Básica</span>
+</div>
+
+<div class="operation-card">
+    <div class="operation-title">
+        <span class="operation-number">5</span>
+        Recorrido en anchura (amplitud o por niveles)
+    </div>
+    <div class="operation-description">
+        <strong>Descripción:</strong> Recorre el árbol nivel por nivel, de izquierda a derecha (BFS).<br>
+        <strong>Método C#:</strong> <code>RecorridoPorNiveles()</code> - Retorna <code>List&lt;Song&gt;</code><br>
+        <strong>Estructura:</strong> Usa <code>Queue&lt;Node&gt;</code> para implementar BFS<br>
+        <strong>Complejidad:</strong> O(n)<br>
+        <strong>Ubicación:</strong> Página "Recorridos"
+    </div>
+    <span class="operation-type">Básica</span>
+</div>
+
+<div class="operation-card">
+    <div class="operation-title">
+        <span class="operation-number">6</span>
+        Recorrido en Preorden
+    </div>
+    <div class="operation-description">
+        <strong>Descripción:</strong> Recorre el árbol en orden: Nodo → Izquierdo → Derecho.<br>
+        <strong>Método C#:</strong> <code>RecorridoPreorden()</code> - Retorna <code>List&lt;Song&gt;</code><br>
+        <strong>Implementación:</strong> Recursión<br>
+        <strong>Complejidad:</strong> O(n)<br>
+        <strong>Ubicación:</strong> Página "Recorridos"
+    </div>
+    <span class="operation-type">Básica</span>
+</div>
+
+<div class="operation-card">
+    <div class="operation-title">
+        <span class="operation-number">7</span>
+        Recorrido en Postorden
+    </div>
+    <div class="operation-description">
+        <strong>Descripción:</strong> Recorre el árbol en orden: Izquierdo → Derecho → Nodo.<br>
+        <strong>Método C#:</strong> <code>RecorridoPostorden()</code> - Retorna <code>List&lt;Song&gt;</code><br>
+        <strong>Implementación:</strong> Recursión<br>
+        <strong>Complejidad:</strong> O(n)<br>
+        <strong>Ubicación:</strong> Página "Recorridos"
+    </div>
+    <span class="operation-type">Básica</span>
+</div>
+
+<div class="operation-card">
+    <div class="operation-title">
+        <span class="operation-number">8</span>
+        Recorrido en Inorden
+    </div>
+    <div class="operation-description">
+        <strong>Descripción:</strong> Recorre el árbol en orden: Izquierdo → Nodo → Derecho (orden ascendente).<br>
+        <strong>Método C#:</strong> <code>RecorridoInorden()</code> - Retorna <code>List&lt;Song&gt;</code><br>
+        <strong>Implementación:</strong> Recursión<br>
+        <strong>Complejidad:</strong> O(n)<br>
+        <strong>Ubicación:</strong> Página "Recorridos" y página de Inicio
+    </div>
+    <span class="operation-type">Básica</span>
+</div>
+
+<div class="operation-card">
+    <div class="operation-title">
+        <span class="operation-number">9</span>
+        Número de niveles del árbol
+    </div>
+    <div class="operation-description">
+        <strong>Descripción:</strong> Calcula la altura del árbol (número de niveles desde la raíz hasta la hoja más profunda).<br>
+        <strong>Método C#:</strong> <code>ObtenerAltura()</code> - Retorna <code>int</code><br>
+        <strong>Implementación:</strong> Recursión con <code>Math.Max()</code><br>
+        <strong>Complejidad:</strong> O(n)<br>
+        <strong>Ubicación:</strong> Página "Estadísticas"
+    </div>
+    <span class="operation-type">Básica</span>
+</div>
+
+<div class="operation-card">
+    <div class="operation-title">
+        <span class="operation-number">10</span>
+        Nivel de un nodo en específico
+    </div>
+    <div class="operation-description">
+        <strong>Descripción:</strong> Determina en qué nivel se encuentra un nodo específico (la raíz está en nivel 0).<br>
+        <strong>Método C#:</strong> <code>ObtenerNivelDeNodo(int id)</code> - Retorna <code>int</code><br>
+        <strong>Implementación:</strong> Recursión con contador de nivel<br>
+        <strong>Complejidad:</strong> O(log n) promedio, O(n) peor caso<br>
+        <strong>Ubicación:</strong> Página "Buscar" y "Estadísticas"
+    </div>
+    <span class="operation-type">Básica</span>
+</div>
+
+<h2>🆕 Operaciones Libres (11-12)</h2>
+
+<div class="operation-card">
+    <div class="operation-title">
+        <span class="operation-number">11</span>
+        Buscar por Artista (Operación Libre 1)
+    </div>
+    <div class="operation-description">
+        <strong>Descripción:</strong> Busca todas las canciones que coincidan con un nombre de artista (búsqueda parcial, case-insensitive).<br>
+        <strong>Método C#:</strong> <code>BuscarPorArtista(string artista)</code> - Retorna <code>List&lt;Song&gt;</code><br>
+        <strong>Implementación:</strong> Recorrido completo del árbol con <code>string.Contains()</code><br>
+        <strong>Complejidad:</strong> O(n) - Debe revisar todos los nodos<br>
+        <strong>Ubicación:</strong> Página "Buscar por Artista"<br>
+        <strong>Ejemplo:</strong> Buscar "Queen" encuentra "Bohemian Rhapsody"
+    </div>
+    <span class="operation-type libre">Libre</span>
+</div>
+
+<div class="operation-card">
+    <div class="operation-title">
+        <span class="operation-number">12</span>
+        Top Canciones Más Populares (Operación Libre 2)
+    </div>
+    <div class="operation-description">
+        <strong>Descripción:</strong> Obtiene las N canciones más populares ordenadas por popularidad descendente.<br>
+        <strong>Método C#:</strong> <code>ObtenerTopPopulares(int cantidad)</code> - Retorna <code>List&lt;Song&gt;</code><br>
+        <strong>Implementación:</strong> Recorrido Inorden + LINQ (<code>OrderByDescending</code>, <code>Take</code>)<br>
+        <strong>Complejidad:</strong> O(n log n) - Recorrido + ordenamiento<br>
+        <strong>Ubicación:</strong> Página "Top Populares"<br>
+        <strong>Bibliotecas:</strong> System.Linq
+    </div>
+    <span class="operation-type libre">Libre</span>
+</div>
+
+<h2>🔧 Bibliotecas y Métodos C# Utilizados</h2>
+
+<div class="info-box">
+    <div class="info-box-title">
+        <span class="info-box-icon">📦</span>
+        System.Collections.Generic
+    </div>
+    <div class="info-box-content">
+        <strong>List&lt;T&gt;:</strong> Almacenar resultados de recorridos<br>
+        <strong>Queue&lt;T&gt;:</strong> Implementar recorrido por niveles (BFS)<br>
+        <strong>Métodos:</strong> Add(), Count, Enqueue(), Dequeue()
+    </div>
+</div>
+
+<div class="info-box">
+    <div class="info-box-title">
+        <span class="info-box-icon">🔍</span>
+        System.Linq
+    </div>
+    <div class="info-box-content">
+        <strong>OrderByDescending():</strong> Ordenar por popularidad<br>
+        <strong>ThenBy():</strong> Ordenamiento secundario por título<br>
+        <strong>Take():</strong> Limitar cantidad de resultados<br>
+        <strong>ToList():</strong> Convertir IEnumerable a List
+    </div>
+</div>
+
+<div class="info-box">
+    <div class="info-box-title">
+        <span class="info-box-icon">🎯</span>
+        Programación Orientada a Objetos
+    </div>
+    <div class="info-box-content">
+        <strong>Encapsulación:</strong> Propiedades con get/set, campos privados<br>
+        <strong>Herencia:</strong> Song implementa IComparable&lt;Song&gt;<br>
+        <strong>Polimorfismo:</strong> Override de ToString(), CompareTo()<br>
+        <strong>Abstracción:</strong> Interfaces (IComparable)<br>
+        <strong>Composición:</strong> Node contiene Song, BinarySearchTree contiene Node
+    </div>
+</div>
+
+<div class="info-box">
+    <div class="info-box-title">
+        <span class="info-box-icon">⚙️</span>
+        Métodos Clave de C#
+    </div>
+    <div class="info-box-content">
+        <strong>Math.Max():</strong> Calcular altura del árbol<br>
+        <strong>string.IsNullOrWhiteSpace():</strong> Validar strings<br>
+        <strong>string.Trim():</strong> Eliminar espacios<br>
+        <strong>string.Contains():</strong> Búsqueda parcial<br>
+        <strong>string.ToLower():</strong> Comparación case-insensitive<br>
+        <strong>int.CompareTo():</strong> Comparar IDs
+    </div>
+</div>
+
+<div style="margin-top: 2rem; text-align: center;">
+    <a asp-action="Index" class="btn btn-primary">Volver al Inicio</a>
+</div>

@@ -1,0 +1,17 @@
+===========================================
+   PROYECTO: SISTEMA DE PLAYLIST MUSICAL
+   ESTRUCTURA DE DATOS: ÁRBOL BINARIO DE BÚSQUEDA (ABB)
+===========================================
+
+INTEGRANTES:
+1. Yeng Lee Salas Jimenez
+2. Nombre Completo del Integrante 2
+3. Nombre Completo del Integrante 3
+
+GRUPO: 4 E
+PROGRAMA: DSM (Desarrollo de Software Multiplataforma)
+CUATRIMESTRE: 4to Cuatrimestre
+
+FECHA: Noviembre 2025
+
+===========================================

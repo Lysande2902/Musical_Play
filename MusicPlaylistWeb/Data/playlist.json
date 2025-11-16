@@ -1,0 +1,130 @@
+{
+  "canciones": [
+    {
+      "Id": 10,
+      "Titulo": "Secreto de Amor",
+      "Artista": "Joan Sebastian",
+      "Duracion": 245,
+      "Popularidad": 93
+    },
+    {
+      "Id": 5,
+      "Titulo": "Monster",
+      "Artista": "Skillet",
+      "Duracion": 177,
+      "Popularidad": 95
+    },
+    {
+      "Id": 15,
+      "Titulo": "Feel Special",
+      "Artista": "TWICE",
+      "Duracion": 207,
+      "Popularidad": 96
+    },
+    {
+      "Id": 3,
+      "Titulo": "Hero",
+      "Artista": "Skillet",
+      "Duracion": 183,
+      "Popularidad": 92
+    },
+    {
+      "Id": 7,
+      "Titulo": "November Rain",
+      "Artista": "Guns N' Roses",
+      "Duracion": 537,
+      "Popularidad": 98
+    },
+    {
+      "Id": 12,
+      "Titulo": "Fancy",
+      "Artista": "TWICE",
+      "Duracion": 216,
+      "Popularidad": 98
+    },
+    {
+      "Id": 18,
+      "Titulo": "God's Menu",
+      "Artista": "Stray Kids",
+      "Duracion": 170,
+      "Popularidad": 97
+    },
+    {
+      "Id": 1,
+      "Titulo": "Back In Black",
+      "Artista": "AC/DC",
+      "Duracion": 255,
+      "Popularidad": 97
+    },
+    {
+      "Id": 4,
+      "Titulo": "Highway to Hell",
+      "Artista": "AC/DC",
+      "Duracion": 208,
+      "Popularidad": 96
+    },
+    {
+      "Id": 6,
+      "Titulo": "Bohemian Rhapsody",
+      "Artista": "Queen",
+      "Duracion": 354,
+      "Popularidad": 100
+    },
+    {
+      "Id": 8,
+      "Titulo": "Feel Invincible",
+      "Artista": "Skillet",
+      "Duracion": 223,
+      "Popularidad": 90
+    },
+    {
+      "Id": 11,
+      "Titulo": "Hotel California",
+      "Artista": "Eagles",
+      "Duracion": 391,
+      "Popularidad": 98
+    },
+    {
+      "Id": 13,
+      "Titulo": "Tatuajes",
+      "Artista": "Joan Sebastian",
+      "Duracion": 234,
+      "Popularidad": 91
+    },
+    {
+      "Id": 16,
+      "Titulo": "Smells Like Teen Spirit",
+      "Artista": "Nirvana",
+      "Duracion": 301,
+      "Popularidad": 96
+    },
+    {
+      "Id": 20,
+      "Titulo": "Back Door",
+      "Artista": "Stray Kids",
+      "Duracion": 173,
+      "Popularidad": 94
+    },
+    {
+      "Id": 2,
+      "Titulo": "Sweet Child O' Mine",
+      "Artista": "Guns N' Roses",
+      "Duracion": 356,
+      "Popularidad": 99
+    },
+    {
+      "Id": 9,
+      "Titulo": "Stairway to Heaven",
+      "Artista": "Led Zeppelin",
+      "Duracion": 482,
+      "Popularidad": 99
+    },
+    {
+      "Id": 14,
+      "Titulo": "Imagine",
+      "Artista": "John Lennon",
+      "Duracion": 183,
+      "Popularidad": 97
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+===========================================
+   PROYECTO: SISTEMA DE PLAYLIST MUSICAL WEB
+   ESTRUCTURA DE DATOS: ÁRBOL BINARIO DE BÚSQUEDA (ABB)
+   TECNOLOGÍA: ASP.NET CORE MVC
+===========================================
+
+INTEGRANTES:
+1. Yeng Lee Salas Jimenez
+2. [Nombre del Integrante 2]
+3. [Nombre del Integrante 3]
+
+GRUPO: 4 E
+PROGRAMA: DSM (Desarrollo de Software Multiplataforma)
+CUATRIMESTRE: [Especificar cuatrimestre]
+
+FECHA: Noviembre 2025
+
+===========================================
+
+OPERACIONES IMPLEMENTADAS:
+1. ✅ Imprimir elementos del árbol
+2. ✅ Buscar elemento en el árbol (por ID)
+3. ✅ Insertar elemento en el árbol
+4. ✅ Borrar elemento del árbol
+5. ✅ Recorrido en anchura (amplitud/por niveles)
+6. ✅ Recorrido en Preorden
+7. ✅ Recorrido en Postorden
+8. ✅ Recorrido en Inorden
+9. ✅ Número de niveles del árbol (altura)
+10. ✅ Nivel de un nodo específico
+
+OPERACIONES LIBRES (EXTRAS):
+11. ✅ Buscar por Artista (búsqueda parcial)
+12. ✅ Top Canciones Más Populares
+
+DISEÑO:
+- Estilo: Inspirado en Spotify
+- Colores: Verde (#1DB954) y Negro (#191414)
+- Interfaz: Moderna, responsiva y dinámica
+
+ARQUITECTURA:
+- Patrón: MVC (Model-View-Controller)
+- Paradigma: POO (Programación Orientada a Objetos)
+- Validaciones: Múltiples capas (Cliente, Modelo, Servicio, Controlador)
+
+===========================================

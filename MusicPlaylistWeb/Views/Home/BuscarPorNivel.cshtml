@@ -1,0 +1,357 @@
+@model List<MusicPlaylistWeb.Models.Song>
+
+@{
+    ViewData["Title"] = "Buscar por Nivel";
+}
+
+<h1>🔍 Buscar Canciones por Nivel del Árbol</h1>
+
+<div class="info-box">
+    <div class="info-box-title">
+        <span class="info-box-icon">🌳</span>
+        Búsqueda por Nivel en el Árbol Binario
+    </div>
+    <div class="info-box-content">
+        <strong>Descripción:</strong> Encuentra todas las canciones que se encuentran en un nivel específico del árbol.<br>
+        <strong>Nivel 0:</strong> Raíz del árbol | <strong>Altura actual:</strong> @ViewBag.AlturaMaxima niveles (0 a @(ViewBag.AlturaMaxima - 1))<br>
+        <strong>Complejidad:</strong> O(n) - Recorre todos los nodos verificando su nivel
+    </div>
+</div>
+
+<div class="card">
+    <form method="get" asp-action="BuscarPorNivel" class="search-form">
+        <div class="form-group">
+            <label for="nivel">Nivel del Árbol (0 a @(ViewBag.AlturaMaxima - 1)):</label>
+            <input type="number" 
+                   id="nivel" 
+                   name="nivel" 
+                   class="form-control" 
+                   min="0" 
+                   max="@(ViewBag.AlturaMaxima - 1)"
+                   value="@ViewBag.Nivel"
+                   placeholder="Ingrese el nivel (ej: 0, 1, 2...)" 
+                   required>
+            <small class="form-text">Nivel 0 = Raíz, Nivel 1 = Hijos de la raíz, etc.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i> Buscar en Nivel
+        </button>
+        <a href="@Url.Action("Estadisticas")" class="btn btn-secondary">
+            <i class="fas fa-chart-bar"></i> Ver Estructura Completa
+        </a>
+    </form>
+</div>
+
+@if (ViewBag.Nivel != null)
+{
+    <div class="card">
+        <h2>📊 Resultados para Nivel @ViewBag.Nivel</h2>
+        
+        @if (Model != null && Model.Any())
+        {
+            <div class="alert alert-success">
+                <strong>✓ Se encontraron @Model.Count canción(es) en el nivel @ViewBag.Nivel</strong>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Artista</th>
+                            <th>Duración</th>
+                            <th>Popularidad</th>
+                            <th>Nivel</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cancion in Model)
+                        {
+                            <tr>
+                                <td><strong>@cancion.Id</strong></td>
+                                <td>@cancion.Titulo</td>
+                                <td>@cancion.Artista</td>
+                                <td>@cancion.DuracionFormateada</td>
+                                <td>
+                                    <div class="popularity-bar">
+                                        <div class="popularity-fill" style="width: @cancion.Popularidad%"></div>
+                                        <span class="popularity-text">@cancion.Popularidad%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-level">Nivel @ViewBag.Nivel</span>
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Editar", new { id = cancion.Id })" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                    <a href="@Url.Action("Buscar", new { id = cancion.Id })" class="btn btn-sm btn-info">
+                                        <i class="fas fa-info-circle"></i> Detalles
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="stats-summary">
+                <h3>📈 Estadísticas del Nivel @ViewBag.Nivel</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">@Model.Count</div>
+                        <div class="stat-label">Canciones en este nivel</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">@Model.Average(c => c.Popularidad).ToString("F1")%</div>
+                        <div class="stat-label">Popularidad Promedio</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">@TimeSpan.FromSeconds(Model.Sum(c => c.Duracion)).ToString(@"hh\:mm\:ss")</div>
+                        <div class="stat-label">Duración Total</div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <strong>⚠ No se encontraron canciones en el nivel @ViewBag.Nivel</strong>
+                <p>Este nivel está vacío o no existe en el árbol actual.</p>
+                <p>La altura del árbol es @ViewBag.AlturaMaxima, por lo que los niveles válidos son de 0 a @(ViewBag.AlturaMaxima - 1).</p>
+            </div>
+        }
+    </div>
+}
+
+<style>
+.search-form {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.1) 0%, rgba(29, 185, 84, 0.05) 100%);
+    border-radius: 12px;
+    border: 2px solid rgba(29, 185, 84, 0.3);
+}
+
+.search-form .form-group {
+    flex: 1;
+    min-width: 280px;
+}
+
+.search-form .form-group label {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: #1DB954;
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.search-form .form-control {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    border: 2px solid rgba(29, 185, 84, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.search-form .form-control:focus {
+    outline: none;
+    border-color: #1DB954;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.2);
+}
+
+.search-form .form-text {
+    display: block;
+    margin-top: 0.5rem;
+    color: #b3b3b3;
+    font-size: 0.9rem;
+}
+
+.search-form .btn {
+    padding: 0.85rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search-form .btn-primary {
+    background: linear-gradient(135deg, #1DB954 0%, #1ed760 100%);
+    color: white;
+}
+
+.search-form .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(29, 185, 84, 0.4);
+}
+
+.search-form .btn-secondary {
+    background: linear-gradient(135deg, #535353 0%, #6b6b6b 100%);
+    color: white;
+}
+
+.search-form .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(83, 83, 83, 0.4);
+}
+
+.badge-level {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.stats-summary {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.05) 0%, rgba(29, 185, 84, 0.1) 100%);
+    border-radius: 12px;
+    border-top: 4px solid #1DB954;
+}
+
+.stats-summary h3 {
+    color: #1DB954;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.alert {
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.alert strong {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.alert-success {
+    background: rgba(29, 185, 84, 0.15);
+    border: 2px solid #1DB954;
+    color: #1DB954;
+    border-left: 6px solid #1DB954;
+}
+
+.alert-warning {
+    background: rgba(255, 193, 7, 0.15);
+    border: 2px solid #ffc107;
+    color: #ffc107;
+    border-left: 6px solid #ffc107;
+}
+
+.alert p {
+    margin: 0.75rem 0;
+    font-size: 0.95rem;
+    color: #e0e0e0;
+}
+
+.table-responsive {
+    margin-top: 2rem;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+}
+
+.table thead th {
+    background: rgba(29, 185, 84, 0.2);
+    color: #1DB954;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+}
+
+.table tbody tr {
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background: rgba(29, 185, 84, 0.15);
+    transform: scale(1.01);
+}
+
+.table tbody td {
+    padding: 1rem;
+    border: none;
+    color: #e0e0e0;
+}
+
+.table tbody td strong {
+    color: #1DB954;
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+    color: #000;
+}
+
+.btn-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+    color: white;
+}
+
+.btn-info:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+}
+
+@@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-form .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>

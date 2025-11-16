@@ -1,0 +1,167 @@
+@model MusicPlaylistWeb.Models.Song
+@{
+    ViewData["Title"] = "Editar Canción";
+}
+
+<h1>✏️ Editar Canción</h1>
+
+<div class="info-box">
+    <div class="info-box-title">
+        <span class="info-box-icon">✏️</span>
+        Editar Canción Existente
+    </div>
+    <div class="info-box-content">
+        <strong>Operación:</strong> Modificar los datos de una canción existente<br>
+        <strong>Nota:</strong> Puedes cambiar el ID, pero debe ser único. Si cambias título/artista, no debe duplicarse.
+    </div>
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-error">
+        @TempData["Error"]
+    </div>
+}
+
+<div class="card">
+    <form asp-action="Editar" method="post" id="formEditar">
+        <input type="hidden" name="idOriginal" value="@Model.Id" />
+        
+        <div class="form-group">
+            <label for="Id">ID de la Canción</label>
+            <input type="number" 
+                   class="form-control" 
+                   id="Id" 
+                   name="Id" 
+                   value="@Model.Id"
+                   min="1" 
+                   step="1"
+                   required />
+            <small>Debe ser un número entero positivo y único</small>
+        </div>
+
+        <div class="form-group">
+            <label for="Titulo">Título</label>
+            <input type="text" 
+                   class="form-control" 
+                   id="Titulo" 
+                   name="Titulo" 
+                   value="@Model.Titulo"
+                   maxlength="100" 
+                   required />
+            <small>1-100 caracteres, debe contener al menos una letra</small>
+        </div>
+
+        <div class="form-group">
+            <label for="Artista">Artista</label>
+            <input type="text" 
+                   class="form-control" 
+                   id="Artista" 
+                   name="Artista" 
+                   value="@Model.Artista"
+                   maxlength="50" 
+                   required />
+            <small>1-50 caracteres, debe contener al menos una letra</small>
+        </div>
+
+        <div class="form-group">
+            <label for="Duracion">Duración (segundos)</label>
+            <input type="number" 
+                   class="form-control" 
+                   id="Duracion" 
+                   name="Duracion" 
+                   value="@Model.Duracion"
+                   min="10" 
+                   max="7200" 
+                   step="1"
+                   required />
+            <small>Entre 10 segundos y 7200 segundos (2 horas)</small>
+        </div>
+
+        <div class="form-group">
+            <label for="Popularidad">Popularidad (0-100)</label>
+            <input type="number" 
+                   class="form-control" 
+                   id="Popularidad" 
+                   name="Popularidad" 
+                   value="@Model.Popularidad"
+                   min="0" 
+                   max="100" 
+                   step="1"
+                   required />
+            <small>Valor entre 0 y 100</small>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">💾 Guardar Cambios</button>
+            <a asp-action="Index" class="btn btn-secondary">❌ Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Validaciones del formulario
+    document.getElementById('formEditar').addEventListener('submit', function(e) {
+        const id = parseInt(document.getElementById('Id').value);
+        const titulo = document.getElementById('Titulo').value.trim();
+        const artista = document.getElementById('Artista').value.trim();
+        const duracion = parseInt(document.getElementById('Duracion').value);
+        const popularidad = parseInt(document.getElementById('Popularidad').value);
+
+        // Validar ID
+        if (id <= 0 || !Number.isInteger(id)) {
+            e.preventDefault();
+            alert('❌ El ID debe ser un número entero positivo.');
+            return false;
+        }
+
+        // Validar título
+        if (titulo.length < 1 || titulo.length > 100) {
+            e.preventDefault();
+            alert('❌ El título debe tener entre 1 y 100 caracteres.');
+            return false;
+        }
+
+        if (!/[a-zA-Z]/.test(titulo)) {
+            e.preventDefault();
+            alert('❌ El título debe contener al menos una letra.');
+            return false;
+        }
+
+        // Validar artista
+        if (artista.length < 1 || artista.length > 50) {
+            e.preventDefault();
+            alert('❌ El artista debe tener entre 1 y 50 caracteres.');
+            return false;
+        }
+
+        if (!/[a-zA-Z]/.test(artista)) {
+            e.preventDefault();
+            alert('❌ El artista debe contener al menos una letra.');
+            return false;
+        }
+
+        // Validar duración
+        if (duracion < 10 || duracion > 7200) {
+            e.preventDefault();
+            alert('❌ La duración debe estar entre 10 y 7200 segundos.');
+            return false;
+        }
+
+        // Validar popularidad
+        if (popularidad < 0 || popularidad > 100) {
+            e.preventDefault();
+            alert('❌ La popularidad debe estar entre 0 y 100.');
+            return false;
+        }
+    });
+
+    // Prevenir caracteres no numéricos en campos numéricos
+    ['Id', 'Duracion', 'Popularidad'].forEach(id => {
+        document.getElementById(id).addEventListener('keypress', function(e) {
+            if (e.key < '0' || e.key > '9') {
+                e.preventDefault();
+            }
+        });
+    });
+</script>

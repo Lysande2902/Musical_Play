@@ -1,0 +1,64 @@
+@model MusicPlaylistWeb.Models.Song
+@{
+    ViewData["Title"] = "Buscar Canción";
+}
+
+<h1>🔍 Buscar Canción por ID</h1>
+
+<div class="search-box">
+    <form asp-action="Buscar" method="get" style="display: flex; gap: 1rem; width: 100%;" id="formBuscar">
+        <input type="number" 
+               class="form-control" 
+               name="id" 
+               id="searchId"
+               placeholder="ID de la canción..." 
+               min="1" 
+               step="1"
+               pattern="[0-9]+"
+               title="Solo números enteros positivos"
+               required />
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+</div>
+
+<script>
+    // Prevenir letras en el campo de búsqueda
+    document.getElementById('searchId').addEventListener('keypress', function(e) {
+        if (e.key < '0' || e.key > '9') {
+            e.preventDefault();
+        }
+    });
+
+    document.getElementById('formBuscar').addEventListener('submit', function(e) {
+        const id = document.getElementById('searchId').value;
+        if (!/^\d+$/.test(id) || parseInt(id) <= 0) {
+            e.preventDefault();
+            alert('❌ El ID debe ser un número entero positivo.\nEjemplo: 1, 5, 100');
+            return false;
+        }
+    });
+</script>
+
+@if (Model != null)
+{
+    <div class="card">
+        <h2>✓ Canción Encontrada</h2>
+        <div class="song-item">
+            <div class="song-id">@Model.Id</div>
+            <div class="song-info">
+                <div class="song-title">@Model.Titulo</div>
+                <div class="song-artist">@Model.Artista</div>
+            </div>
+            <div class="song-details">
+                <span>⏱️ @Model.DuracionFormateada</span>
+                <span>⭐ @Model.Popularidad%</span>
+            </div>
+        </div>
+        <div style="margin-top: 1rem; padding: 1rem; background-color: var(--spotify-dark-gray); border-radius: 8px;">
+            <strong style="color: var(--spotify-green);">Nivel en el árbol:</strong> @ViewBag.Nivel
+            <p style="color: var(--spotify-light-gray); margin-top: 0.5rem; font-size: 0.9rem;">
+                (La raíz está en el nivel 0)
+            </p>
+        </div>
+    </div>
+}

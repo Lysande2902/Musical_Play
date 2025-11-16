@@ -1,0 +1,154 @@
+@{
+    ViewData["Title"] = "Estadísticas";
+}
+
+<h1>📊 Estadísticas del Árbol</h1>
+
+<div class="info-box">
+    <div class="info-box-title">
+        <span class="info-box-icon">📈</span>
+        Operaciones 9-10: Número de niveles y Nivel de nodo específico
+    </div>
+    <div class="info-box-content">
+        <strong>Métodos C#:</strong> <code>ObtenerAltura()</code>, <code>ObtenerNivelDeNodo(int id)</code><br>
+        <strong>Complejidad:</strong> O(n) altura, O(log n) nivel | <strong>Implementación:</strong> Recursión con Math.Max()<br>
+        <strong>Descripción:</strong> Calcula la altura del árbol y determina el nivel de cada nodo (raíz = nivel 0).
+    </div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-value">@ViewBag.TotalCanciones</div>
+        <div class="stat-label">Total de Canciones (Nodos)</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">@ViewBag.Altura</div>
+        <div class="stat-label">Altura del Árbol</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">0 - @(ViewBag.Altura - 1)</div>
+        <div class="stat-label">Rango de Niveles</div>
+    </div>
+</div>
+
+<div class="alert alert-info">
+    <strong>ℹ️ Información:</strong> El árbol tiene @ViewBag.TotalCanciones nodos distribuidos en @ViewBag.Altura niveles (del nivel 0 al nivel @(ViewBag.Altura - 1)).
+    <br>
+    <a href="@Url.Action("BuscarPorNivel")" class="btn btn-sm btn-primary" style="margin-top: 0.5rem;">
+        🔍 Buscar canciones por nivel específico
+    </a>
+</div>
+
+<div class="card">
+    <h2>🌳 Estructura del Árbol (Visualización Jerárquica)</h2>
+    <div class="tree-visual">
+        @foreach (var node in ViewBag.Estructura)
+        {
+            var indent = node.Nivel * 40;
+            var isRoot = node.Nivel == 0;
+            var symbol = isRoot ? "🌳" : (node.Nivel == ViewBag.Altura - 1 ? "🍃" : "🌿");
+            
+            <div class="tree-node-visual" style="padding-left: @(indent)px;">
+                @if (!isRoot)
+                {
+                    <span class="tree-branch">└──</span>
+                }
+                <span class="tree-symbol">@symbol</span>
+                <span class="tree-node-content">
+                    <strong class="node-id">[ID: @node.Id]</strong>
+                    <span class="node-title">@node.Titulo</span>
+                    <span class="node-level-badge">Nivel @node.Nivel</span>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+.tree-visual {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    font-family: 'Courier New', monospace;
+    overflow-x: auto;
+}
+
+.tree-node-visual {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.tree-node-visual:hover {
+    background: rgba(29, 185, 84, 0.1);
+    transform: translateX(5px);
+}
+
+.tree-branch {
+    color: #1DB954;
+    margin-right: 0.5rem;
+    font-weight: bold;
+}
+
+.tree-symbol {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.tree-node-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.node-id {
+    color: #1DB954;
+    font-weight: bold;
+}
+
+.node-title {
+    color: #ffffff;
+}
+
+.node-level-badge {
+    background: rgba(29, 185, 84, 0.2);
+    color: #1DB954;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.alert-info {
+    background: rgba(33, 150, 243, 0.1);
+    border: 2px solid #2196F3;
+    color: #2196F3;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+.alert-info strong {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.alert-info .btn {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: #2196F3;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.alert-info .btn:hover {
+    background: #1976D2;
+    transform: translateY(-2px);
+}
+</style>
