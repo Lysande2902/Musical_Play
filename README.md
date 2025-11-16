@@ -1,11 +1,9 @@
-# Sistema de Playlist Musical con Árbol Binario de Búsqueda (ABB)
+# 🎵 Sistema de Playlist Musical con Árbol Binario de Búsqueda (ABB)
 
 ## 📋 Información del Proyecto
 
 **Equipo:**
 - Yeng Lee Salas Jimenez
-- Nombre Completo del Integrante 2
-- Nombre Completo del Integrante 3
 
 **Grupo:** 4 E  
 **Programa:** DSM (Desarrollo de Software Multiplataforma)  
@@ -15,29 +13,38 @@
 
 ## 📖 Descripción
 
-Sistema de gestión de playlist musical implementado con Árbol Binario de Búsqueda (ABB) en dos lenguajes de programación: **Java** y **C#**. El sistema permite organizar canciones de manera eficiente, realizar búsquedas rápidas y visualizar la estructura del árbol mediante diferentes recorridos.
+Sistema de gestión de playlist musical implementado con **Árbol Binario de Búsqueda (ABB) Balanceado** en tres versiones:
+- **Aplicación Web** (ASP.NET Core MVC) - ⭐ Versión Principal
+- **Consola C#** (.NET)
+- **Consola Java**
+
+El sistema permite organizar 18 canciones de manera eficiente con altura óptima de 5 niveles, realizar búsquedas rápidas O(log n) y visualizar la estructura del árbol mediante diferentes recorridos.
 
 ---
 
 ## 🎯 Funcionalidades Implementadas
 
-### Operaciones Básicas del ABB
-1. ✅ **Insertar** canciones en el árbol
+### Operaciones Básicas del ABB (12/12 Requeridas)
+1. ✅ **Imprimir** elementos del árbol
 2. ✅ **Buscar** canciones por ID
-3. ✅ **Eliminar** canciones del árbol
-4. ✅ **Imprimir** elementos del árbol
-
-### Recorridos del Árbol
-5. ✅ **Recorrido Inorden** (Izquierdo → Nodo → Derecho) - Orden ascendente
+3. ✅ **Insertar** canciones en el árbol
+4. ✅ **Eliminar** canciones del árbol
+5. ✅ **Recorrido por Niveles** (Amplitud/BFS)
 6. ✅ **Recorrido Preorden** (Nodo → Izquierdo → Derecho)
 7. ✅ **Recorrido Postorden** (Izquierdo → Derecho → Nodo)
-8. ✅ **Recorrido por Niveles** (Amplitud/BFS)
-
-### Operaciones de Análisis
+8. ✅ **Recorrido Inorden** (Izquierdo → Nodo → Derecho) - Orden ascendente
 9. ✅ **Número de niveles** del árbol (altura)
 10. ✅ **Nivel de un nodo específico**
-11. ✅ **Visualización estructurada** del árbol
-12. ✅ **Estadísticas completas** (cantidad de canciones, altura)
+11. ✅ **Buscar por Artista** (Operación Libre 1)
+12. ✅ **Top Canciones Populares** (Operación Libre 2)
+
+### Funcionalidades BONUS (Aplicación Web)
+13. ✅ **Buscar por Nivel** - Encuentra todas las canciones en un nivel específico
+14. ✅ **Editar Canciones** - Modificar datos de canciones existentes
+15. ✅ **Persistencia JSON** - Guardado automático de cambios
+16. ✅ **Visualización Jerárquica** - Estructura del árbol con niveles
+17. ✅ **Estadísticas Avanzadas** - Análisis completo del árbol
+18. ✅ **Validaciones Robustas** - Prevención de errores y duplicados
 
 ---
 
@@ -140,19 +147,38 @@ Sistema de gestión de playlist musical implementado con Árbol Binario de Búsq
 
 ## 🔧 Estructura del Proyecto
 
-### Proyecto Java
+### 🌐 Aplicación Web (Principal) - ASP.NET Core MVC
 ```
-music-playlist-java/
-├── src/
-│   ├── Song.java                    # Modelo de canción
-│   ├── Node.java                    # Nodo del árbol
-│   ├── BinarySearchTree.java        # Implementación del ABB
-│   ├── PlaylistManager.java         # Gestor de playlist
-│   └── Main.java                    # Interfaz de usuario
-└── equipo.txt                       # Información del equipo
+MusicPlaylistWeb/
+├── Controllers/
+│   └── HomeController.cs            # 13 acciones (CRUD + búsquedas)
+├── Models/
+│   ├── Song.cs                      # Modelo con validaciones
+│   └── Node.cs                      # Nodo del árbol
+├── DataStructures/
+│   └── BinarySearchTree.cs          # ABB Balanceado (18 nodos, altura 5)
+├── Services/
+│   ├── PlaylistService.cs           # Lógica de negocio
+│   └── JsonPersistenceService.cs    # Persistencia automática
+├── Views/Home/
+│   ├── Index.cshtml                 # Lista/Imprimir
+│   ├── Agregar.cshtml               # Insertar
+│   ├── Editar.cshtml                # Modificar
+│   ├── Buscar.cshtml                # Búsqueda por ID
+│   ├── Recorridos.cshtml            # 4 recorridos
+│   ├── Estadisticas.cshtml          # Niveles/Altura
+│   ├── BuscarPorArtista.cshtml      # Op. Libre 1
+│   ├── TopPopulares.cshtml          # Op. Libre 2
+│   ├── BuscarPorNivel.cshtml        # BONUS
+│   └── Ayuda.cshtml                 # Documentación
+├── wwwroot/css/
+│   └── site.css                     # Tema Spotify
+├── Data/
+│   └── playlist.json                # 18 canciones balanceadas
+└── *.md                             # Documentación técnica
 ```
 
-### Proyecto C#
+### 💻 Consola C#
 ```
 MusicPlaylistCSharp/
 ├── Models/
@@ -162,8 +188,21 @@ MusicPlaylistCSharp/
 │   └── BinarySearchTree.cs          # Implementación del ABB
 ├── Managers/
 │   └── PlaylistManager.cs           # Gestor de playlist
-├── Program.cs                       # Interfaz de usuario
-├── MusicPlaylistCSharp.csproj       # Archivo de proyecto
+└── Program.cs                       # Interfaz de usuario
+```
+
+### ☕ Consola Java
+```
+music-playlist-java/
+├── src/
+│   ├── models/
+│   │   ├── Song.java                # Modelo de canción
+│   │   └── Node.java                # Nodo del árbol
+│   ├── datastructures/
+│   │   └── BinarySearchTree.java    # Implementación del ABB
+│   ├── managers/
+│   │   └── PlaylistManager.java     # Gestor de playlist
+│   └── Main.java                    # Interfaz de usuario
 └── equipo.txt                       # Información del equipo
 ```
 
@@ -171,28 +210,36 @@ MusicPlaylistCSharp/
 
 ## 🚀 Cómo Ejecutar
 
-### Proyecto Java
+### 🌐 Aplicación Web (Recomendado)
 
-#### Compilar:
 ```bash
-javac -d music-playlist-java/bin music-playlist-java/src/*.java
+cd MusicPlaylistWeb
+dotnet run
 ```
 
-#### Ejecutar:
+Luego abrir en el navegador: `https://localhost:5001`
+
+**Características:**
+- ✅ Interfaz moderna con tema Spotify
+- ✅ Diseño responsive (móvil y desktop)
+- ✅ Árbol balanceado con 18 canciones
+- ✅ Altura óptima: 5 niveles
+- ✅ Persistencia automática en JSON
+- ✅ 13 operaciones completas + BONUS
+
+### 💻 Consola C#
+
 ```bash
-java -cp music-playlist-java/bin Main
+cd MusicPlaylistCSharp
+dotnet run
 ```
 
-### Proyecto C#
+### ☕ Consola Java
 
-#### Compilar:
 ```bash
-dotnet build MusicPlaylistCSharp/MusicPlaylistCSharp.csproj
-```
-
-#### Ejecutar:
-```bash
-dotnet run --project MusicPlaylistCSharp/MusicPlaylistCSharp.csproj
+cd music-playlist-java
+javac -d bin src/**/*.java
+java -cp bin Main
 ```
 
 ---
@@ -277,9 +324,76 @@ Total de canciones: 7
 
 ---
 
+## 🌳 Árbol Balanceado Profesional
+
+### Estructura Actual (Aplicación Web)
+
+```
+                    10 (Secreto de Amor)
+                   /  \
+                  /    \
+                 5      15 (Feel Special)
+                / \     / \
+               3   7   12  18 (God's Menu)
+              / \ / \ / \ / \
+             1  4 6 8 11 13 16 20
+            /     \         \
+           2       9        14
+```
+
+### Métricas de Balance
+
+| Métrica | Valor | Estado |
+|---------|-------|--------|
+| **Nodos totales** | 18 | ✅ |
+| **Altura** | 5 niveles | ✅ Óptimo |
+| **Altura teórica** | ⌈log₂(19)⌉ = 5 | ✅ Coincide |
+| **Factor de balance** | ≤ 1 | ✅ Balanceado |
+| **Eficiencia** | 100% | ✅ Máxima |
+
+### Distribución por Niveles
+
+- **Nivel 0:** 1 nodo (raíz)
+- **Nivel 1:** 2 nodos
+- **Nivel 2:** 4 nodos
+- **Nivel 3:** 8 nodos
+- **Nivel 4:** 3 nodos
+
+**Total: 18 nodos perfectamente distribuidos** ✅
+
+### ¿Por qué NO está ordenado el JSON?
+
+El JSON tiene el orden `10, 5, 15, 3, 7, 12, 18...` **intencionalmente** para crear un árbol balanceado.
+
+- **JSON ordenado (1,2,3...)** = Árbol degenerado (altura 18) ❌
+- **JSON estratégico** = Árbol balanceado (altura 5) ✅
+
 ## 🧪 Datos de Prueba
 
-El sistema incluye 7 canciones clásicas del rock precargadas (opción 12):
+### Aplicación Web (18 canciones balanceadas)
+
+| ID | Título | Artista | Duración | Popularidad |
+|----|--------|---------|----------|-------------|
+| 1 | Back In Black | AC/DC | 4:15 | 97 |
+| 2 | Sweet Child O' Mine | Guns N' Roses | 5:56 | 99 |
+| 3 | Hero | Skillet | 3:03 | 92 |
+| 4 | Highway to Hell | AC/DC | 3:28 | 96 |
+| 5 | Monster | Skillet | 2:57 | 95 |
+| 6 | Bohemian Rhapsody | Queen | 5:54 | 100 |
+| 7 | November Rain | Guns N' Roses | 8:57 | 98 |
+| 8 | Feel Invincible | Skillet | 3:43 | 90 |
+| 9 | Stairway to Heaven | Led Zeppelin | 8:02 | 99 |
+| 10 | Secreto de Amor | Joan Sebastian | 4:05 | 93 |
+| 11 | Hotel California | Eagles | 6:31 | 98 |
+| 12 | Fancy | TWICE | 3:36 | 98 |
+| 13 | Tatuajes | Joan Sebastian | 3:54 | 91 |
+| 14 | Imagine | John Lennon | 3:03 | 97 |
+| 15 | Feel Special | TWICE | 3:27 | 96 |
+| 16 | Smells Like Teen Spirit | Nirvana | 5:01 | 96 |
+| 18 | God's Menu | Stray Kids | 2:50 | 97 |
+| 20 | Back Door | Stray Kids | 2:53 | 94 |
+
+### Consolas (7 canciones clásicas)
 
 | ID | Título | Artista | Duración | Popularidad |
 |----|--------|---------|----------|-------------|
@@ -295,19 +409,32 @@ El sistema incluye 7 canciones clásicas del rock precargadas (opción 12):
 
 ## 📊 Complejidad de Operaciones
 
-| Operación | Caso Promedio | Peor Caso |
-|-----------|---------------|-----------|
-| Insertar | O(log n) | O(n) |
-| Buscar | O(log n) | O(n) |
-| Eliminar | O(log n) | O(n) |
-| Recorrido Inorden | O(n) | O(n) |
-| Recorrido Preorden | O(n) | O(n) |
-| Recorrido Postorden | O(n) | O(n) |
-| Recorrido por Niveles | O(n) | O(n) |
-| Obtener Altura | O(n) | O(n) |
-| Obtener Nivel | O(log n) | O(n) |
+### Aplicación Web (Árbol Balanceado)
 
-**Nota:** El peor caso O(n) ocurre cuando el árbol está completamente desbalanceado (tipo lista).
+| Operación | Complejidad | Rendimiento Real |
+|-----------|-------------|------------------|
+| Insertar | O(log n) | O(5) - 5 comparaciones máx |
+| Buscar | O(log n) | O(5) - 5 comparaciones máx |
+| Eliminar | O(log n) | O(5) - 5 comparaciones máx |
+| Recorrido Inorden | O(n) | O(18) - visita 18 nodos |
+| Recorrido Preorden | O(n) | O(18) - visita 18 nodos |
+| Recorrido Postorden | O(n) | O(18) - visita 18 nodos |
+| Recorrido por Niveles | O(n) | O(18) - visita 18 nodos |
+| Obtener Altura | O(n) | O(18) - visita 18 nodos |
+| Obtener Nivel | O(log n) | O(5) - 5 comparaciones máx |
+| Buscar por Artista | O(n) | O(18) - recorrido completo |
+| Top Populares | O(n log n) | O(18 log 18) - inorden + sort |
+| Buscar por Nivel | O(n) | O(18) - recorrido completo |
+
+**Eficiencia:** 100% vs árbol óptimo teórico ✅
+
+### Comparación: Balanceado vs Desbalanceado
+
+| Métrica | Balanceado | Desbalanceado | Mejora |
+|---------|------------|---------------|--------|
+| Altura | 5 niveles | 18 niveles | 72% |
+| Búsqueda | O(5) | O(18) | 72% |
+| Eficiencia | 100% | 28% | 72% |
 
 ---
 
