@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Playlist Musical ABB</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
     <header>
@@ -21,55 +22,55 @@
                 <ul class="navbar-menu">
                     <li>
                         <a asp-controller="Home" asp-action="Index" class="tooltip-link">
-                            Inicio
+                            <i class="fas fa-home"></i> Inicio
                             <span class="tooltip-text">Ver todas las canciones ordenadas (Inorden)</span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Home" asp-action="Agregar" class="tooltip-link">
-                            Agregar Canción
+                            <i class="fas fa-plus-circle"></i> Agregar Canción
                             <span class="tooltip-text">Insertar un elemento en el árbol</span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Home" asp-action="Buscar" class="tooltip-link">
-                            Buscar
+                            <i class="fas fa-search"></i> Buscar
                             <span class="tooltip-text">Buscar un elemento por ID en el árbol</span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Home" asp-action="BuscarPorArtista" class="tooltip-link">
-                            Buscar por Artista
-                            <span class="tooltip-text">🆕 Operación Libre 1: Búsqueda parcial por artista</span>
+                            <i class="fas fa-user-music"></i> Buscar por Artista
+                            <span class="tooltip-text">Operación Libre 1: Búsqueda parcial por artista</span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Home" asp-action="TopPopulares" class="tooltip-link">
-                            Top Populares
-                            <span class="tooltip-text">🆕 Operación Libre 2: Canciones más populares</span>
+                            <i class="fas fa-fire"></i> Top Populares
+                            <span class="tooltip-text">Operación Libre 2: Canciones más populares</span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Home" asp-action="Recorridos" class="tooltip-link">
-                            Recorridos
+                            <i class="fas fa-route"></i> Recorridos
                             <span class="tooltip-text">Ver Preorden, Postorden, Inorden y Por Niveles</span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Home" asp-action="Estadisticas" class="tooltip-link">
-                            Estadísticas
+                            <i class="fas fa-chart-bar"></i> Estadísticas
                             <span class="tooltip-text">Altura del árbol y nivel de nodos</span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Home" asp-action="BuscarPorNivel" class="tooltip-link">
-                            Buscar por Nivel
-                            <span class="tooltip-text">🆕 Encontrar canciones en un nivel específico del árbol</span>
+                            <i class="fas fa-layer-group"></i> Buscar por Nivel
+                            <span class="tooltip-text">Encontrar canciones en un nivel específico del árbol</span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Home" asp-action="Ayuda" class="tooltip-link" style="color: var(--spotify-green);">
-                            ❓ Ayuda
+                            <i class="fas fa-question-circle"></i> Ayuda
                             <span class="tooltip-text">Guía completa de todas las operaciones</span>
                         </a>
                     </li>

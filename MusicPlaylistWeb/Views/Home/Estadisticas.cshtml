@@ -2,11 +2,11 @@
     ViewData["Title"] = "Estadísticas";
 }
 
-<h1>📊 Estadísticas del Árbol</h1>
+<h1><i class="fas fa-chart-bar"></i> Estadísticas del Árbol</h1>
 
 <div class="info-box">
     <div class="info-box-title">
-        <span class="info-box-icon">📈</span>
+        <span class="info-box-icon"><i class="fas fa-chart-line"></i></span>
         Operaciones 9-10: Número de niveles y Nivel de nodo específico
     </div>
     <div class="info-box-content">
@@ -32,28 +32,47 @@
 </div>
 
 <div class="alert alert-info">
-    <strong>ℹ️ Información:</strong> El árbol tiene @ViewBag.TotalCanciones nodos distribuidos en @ViewBag.Altura niveles (del nivel 0 al nivel @(ViewBag.Altura - 1)).
+    <strong><i class="fas fa-info-circle"></i> Información:</strong> El árbol tiene @ViewBag.TotalCanciones nodos distribuidos en @ViewBag.Altura niveles (del nivel 0 al nivel @(ViewBag.Altura - 1)).
     <br>
     <a href="@Url.Action("BuscarPorNivel")" class="btn btn-sm btn-primary" style="margin-top: 0.5rem;">
-        🔍 Buscar canciones por nivel específico
+        <i class="fas fa-search"></i> Buscar canciones por nivel específico
     </a>
 </div>
 
 <div class="card">
-    <h2>🌳 Estructura del Árbol (Visualización Jerárquica)</h2>
+    <h2><i class="fas fa-project-diagram"></i> Visualización Gráfica del Árbol</h2>
+    <div class="tree-graph-container">
+        <svg id="treeGraph" width="100%" height="600"></svg>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 2rem;">
+    <h2><i class="fas fa-list"></i> Estructura del Árbol (Lista Jerárquica)</h2>
     <div class="tree-visual">
         @foreach (var node in ViewBag.Estructura)
         {
             var indent = node.Nivel * 40;
             var isRoot = node.Nivel == 0;
-            var symbol = isRoot ? "🌳" : (node.Nivel == ViewBag.Altura - 1 ? "🍃" : "🌿");
             
             <div class="tree-node-visual" style="padding-left: @(indent)px;">
                 @if (!isRoot)
                 {
                     <span class="tree-branch">└──</span>
                 }
-                <span class="tree-symbol">@symbol</span>
+                <span class="tree-symbol">
+                    @if (isRoot)
+                    {
+                        <i class="fas fa-crown" style="color: #ffc107;"></i>
+                    }
+                    else if (node.Nivel == ViewBag.Altura - 1)
+                    {
+                        <i class="fas fa-music" style="color: #1DB954;"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-circle" style="color: #1DB954;"></i>
+                    }
+                </span>
                 <span class="tree-node-content">
                     <strong class="node-id">[ID: @node.Id]</strong>
                     <span class="node-title">@node.Titulo</span>
@@ -64,13 +83,176 @@
     </div>
 </div>
 
+<script>
+// Datos del árbol desde el servidor
+const treeData = @Html.Raw(Json.Serialize(ViewBag.Estructura));
+const altura = @ViewBag.Altura;
+
+// Configuración
+const svg = document.getElementById('treeGraph');
+const width = svg.clientWidth;
+const height = 600;
+const nodeRadius = 30;
+const levelHeight = height / (altura + 1);
+
+// Organizar nodos por nivel
+const nodesByLevel = {};
+treeData.forEach(node => {
+    if (!nodesByLevel[node.nivel]) {
+        nodesByLevel[node.nivel] = [];
+    }
+    nodesByLevel[node.nivel].push(node);
+});
+
+// Calcular posiciones
+const positions = {};
+Object.keys(nodesByLevel).forEach(level => {
+    const nodes = nodesByLevel[level];
+    const levelWidth = width / (nodes.length + 1);
+    nodes.forEach((node, index) => {
+        positions[node.id] = {
+            x: levelWidth * (index + 1),
+            y: levelHeight * (parseInt(level) + 1),
+            ...node
+        };
+    });
+});
+
+// Dibujar líneas (conexiones)
+const svgNS = "http://www.w3.org/2000/svg";
+treeData.forEach(node => {
+    if (node.nivel > 0) {
+        // Encontrar el padre (nodo con ID menor más cercano en nivel anterior)
+        const parentLevel = nodesByLevel[node.nivel - 1];
+        if (parentLevel) {
+            let parent = null;
+            if (node.id < parentLevel[0].id) {
+                // Buscar en el subárbol izquierdo
+                parent = parentLevel.find(p => node.id < p.id);
+            } else {
+                // Buscar en el subárbol derecho
+                parent = [...parentLevel].reverse().find(p => node.id > p.id);
+            }
+            
+            if (parent && positions[parent.id]) {
+                const line = document.createElementNS(svgNS, 'line');
+                line.setAttribute('x1', positions[parent.id].x);
+                line.setAttribute('y1', positions[parent.id].y);
+                line.setAttribute('x2', positions[node.id].x);
+                line.setAttribute('y2', positions[node.id].y);
+                line.setAttribute('stroke', '#1DB954');
+                line.setAttribute('stroke-width', '2');
+                line.setAttribute('opacity', '0.6');
+                svg.appendChild(line);
+            }
+        }
+    }
+});
+
+// Dibujar nodos
+Object.values(positions).forEach(node => {
+    // Círculo
+    const circle = document.createElementNS(svgNS, 'circle');
+    circle.setAttribute('cx', node.x);
+    circle.setAttribute('cy', node.y);
+    circle.setAttribute('r', nodeRadius);
+    circle.setAttribute('fill', node.nivel === 0 ? '#ffc107' : '#1DB954');
+    circle.setAttribute('stroke', '#ffffff');
+    circle.setAttribute('stroke-width', '3');
+    circle.setAttribute('class', 'tree-node');
+    circle.setAttribute('data-id', node.id);
+    circle.setAttribute('data-title', node.titulo);
+    svg.appendChild(circle);
+    
+    // ID del nodo
+    const text = document.createElementNS(svgNS, 'text');
+    text.setAttribute('x', node.x);
+    text.setAttribute('y', node.y + 5);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('fill', '#000');
+    text.setAttribute('font-weight', 'bold');
+    text.setAttribute('font-size', '16');
+    text.textContent = node.id;
+    svg.appendChild(text);
+    
+    // Título debajo del nodo
+    const titleText = document.createElementNS(svgNS, 'text');
+    titleText.setAttribute('x', node.x);
+    titleText.setAttribute('y', node.y + nodeRadius + 20);
+    titleText.setAttribute('text-anchor', 'middle');
+    titleText.setAttribute('fill', '#1DB954');
+    titleText.setAttribute('font-size', '12');
+    titleText.setAttribute('font-weight', '600');
+    titleText.textContent = node.titulo.length > 15 ? node.titulo.substring(0, 15) + '...' : node.titulo;
+    svg.appendChild(titleText);
+});
+
+// Interactividad
+document.querySelectorAll('.tree-node').forEach(node => {
+    node.addEventListener('mouseenter', function() {
+        this.setAttribute('r', nodeRadius + 5);
+        this.setAttribute('stroke-width', '4');
+    });
+    
+    node.addEventListener('mouseleave', function() {
+        this.setAttribute('r', nodeRadius);
+        this.setAttribute('stroke-width', '3');
+    });
+    
+    node.addEventListener('click', function() {
+        const id = this.getAttribute('data-id');
+        const title = this.getAttribute('data-title');
+        alert(`Canción: ${title}\nID: ${id}`);
+    });
+});
+</script>
+
 <style>
+.tree-graph-container {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    overflow-x: auto;
+    min-height: 600px;
+}
+
+#treeGraph {
+    display: block;
+    margin: 0 auto;
+}
+
+.tree-node {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tree-node:hover {
+    filter: brightness(1.2);
+}
+
 .tree-visual {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     padding: 2rem;
     border-radius: 12px;
     font-family: 'Courier New', monospace;
     overflow-x: auto;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.tree-visual::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.tree-visual::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.tree-visual::-webkit-scrollbar-thumb {
+    background: #1DB954;
+    border-radius: 10px;
 }
 
 .tree-node-visual {
@@ -94,8 +276,10 @@
 }
 
 .tree-symbol {
-    margin-right: 0.5rem;
-    font-size: 1.2rem;
+    margin-right: 0.75rem;
+    font-size: 1rem;
+    width: 20px;
+    text-align: center;
 }
 
 .tree-node-content {
