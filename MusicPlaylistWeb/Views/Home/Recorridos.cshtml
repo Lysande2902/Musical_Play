@@ -1,5 +1,6 @@
 @{
     ViewData["Title"] = "Recorridos del Árbol";
+    var tipoRecorrido = ViewBag.TipoRecorrido ?? "inorden";
 }
 
 <h1>🌳 Recorridos del Árbol</h1>
@@ -16,141 +17,238 @@
     </div>
 </div>
 
-<div class="traversal-grid">
-    <!-- Inorden -->
-    <div class="traversal-card">
-        <div class="traversal-header">
-            <div class="traversal-title">
-                <span class="traversal-icon">1️⃣</span>
-                <span>Inorden</span>
-            </div>
-            <div class="traversal-subtitle">Izquierdo → Nodo → Derecho</div>
-        </div>
-        <div class="traversal-description">
-            <strong>Orden:</strong> ASCENDENTE por ID<br>
-            <strong>Uso:</strong> Mostrar elementos ordenados
-        </div>
-        <div class="traversal-list-container">
-            @{int indexInorden = 1;}
-            @foreach (var song in ViewBag.Inorden)
-            {
-                <div class="traversal-item">
-                    <span class="item-number">@indexInorden.</span>
-                    <span class="item-id">[ID: @song.Id]</span>
-                    <span class="item-title">@song.Titulo</span>
-                    <span class="item-artist">@song.Artista</span>
-                </div>
-                indexInorden++;
-            }
-        </div>
-    </div>
-
-    <!-- Preorden -->
-    <div class="traversal-card">
-        <div class="traversal-header">
-            <div class="traversal-title">
-                <span class="traversal-icon">2️⃣</span>
-                <span>Preorden</span>
-            </div>
-            <div class="traversal-subtitle">Nodo → Izquierdo → Derecho</div>
-        </div>
-        <div class="traversal-description">
-            <strong>Orden:</strong> RAÍZ primero<br>
-            <strong>Uso:</strong> Copiar estructura del árbol
-        </div>
-        <div class="traversal-list-container">
-            @{int indexPreorden = 1;}
-            @foreach (var song in ViewBag.Preorden)
-            {
-                <div class="traversal-item">
-                    <span class="item-number">@indexPreorden.</span>
-                    <span class="item-id">[ID: @song.Id]</span>
-                    <span class="item-title">@song.Titulo</span>
-                    <span class="item-artist">@song.Artista</span>
-                </div>
-                indexPreorden++;
-            }
-        </div>
-    </div>
-
-    <!-- Postorden -->
-    <div class="traversal-card">
-        <div class="traversal-header">
-            <div class="traversal-title">
-                <span class="traversal-icon">3️⃣</span>
-                <span>Postorden</span>
-            </div>
-            <div class="traversal-subtitle">Izquierdo → Derecho → Nodo</div>
-        </div>
-        <div class="traversal-description">
-            <strong>Orden:</strong> HOJAS primero<br>
-            <strong>Uso:</strong> Eliminar árbol, calcular expresiones
-        </div>
-        <div class="traversal-list-container">
-            @{int indexPostorden = 1;}
-            @foreach (var song in ViewBag.Postorden)
-            {
-                <div class="traversal-item">
-                    <span class="item-number">@indexPostorden.</span>
-                    <span class="item-id">[ID: @song.Id]</span>
-                    <span class="item-title">@song.Titulo</span>
-                    <span class="item-artist">@song.Artista</span>
-                </div>
-                indexPostorden++;
-            }
-        </div>
-    </div>
-
-    <!-- Por Niveles -->
-    <div class="traversal-card">
-        <div class="traversal-header">
-            <div class="traversal-title">
-                <span class="traversal-icon">4️⃣</span>
-                <span>Por Niveles (BFS)</span>
-            </div>
-            <div class="traversal-subtitle">Nivel por Nivel, Izq → Der</div>
-        </div>
-        <div class="traversal-description">
-            <strong>Orden:</strong> NIVEL por NIVEL<br>
-            <strong>Uso:</strong> Búsqueda por niveles
-        </div>
-        <div class="traversal-list-container">
-            @{int indexNiveles = 1;}
-            @foreach (var song in ViewBag.PorNiveles)
-            {
-                <div class="traversal-item">
-                    <span class="item-number">@indexNiveles.</span>
-                    <span class="item-id">[ID: @song.Id]</span>
-                    <span class="item-title">@song.Titulo</span>
-                    <span class="item-artist">@song.Artista</span>
-                </div>
-                indexNiveles++;
-            }
-        </div>
+<div class="selector-container">
+    <h2>Selecciona el tipo de recorrido:</h2>
+    <div class="selector-buttons">
+        <a href="@Url.Action("Recorridos", new { tipo = "inorden" })" 
+           class="selector-btn @(tipoRecorrido == "inorden" ? "active" : "")">
+            <span class="btn-icon">1️⃣</span>
+            <span class="btn-text">Inorden</span>
+            <span class="btn-subtitle">Izq → Nodo → Der</span>
+        </a>
+        <a href="@Url.Action("Recorridos", new { tipo = "preorden" })" 
+           class="selector-btn @(tipoRecorrido == "preorden" ? "active" : "")">
+            <span class="btn-icon">2️⃣</span>
+            <span class="btn-text">Preorden</span>
+            <span class="btn-subtitle">Nodo → Izq → Der</span>
+        </a>
+        <a href="@Url.Action("Recorridos", new { tipo = "postorden" })" 
+           class="selector-btn @(tipoRecorrido == "postorden" ? "active" : "")">
+            <span class="btn-icon">3️⃣</span>
+            <span class="btn-text">Postorden</span>
+            <span class="btn-subtitle">Izq → Der → Nodo</span>
+        </a>
+        <a href="@Url.Action("Recorridos", new { tipo = "niveles" })" 
+           class="selector-btn @(tipoRecorrido == "niveles" ? "active" : "")">
+            <span class="btn-icon">4️⃣</span>
+            <span class="btn-text">Por Niveles</span>
+            <span class="btn-subtitle">BFS</span>
+        </a>
     </div>
 </div>
 
+<div class="traversal-display">
+    @if (tipoRecorrido == "inorden")
+    {
+        <div class="traversal-card-full">
+            <div class="traversal-header">
+                <div class="traversal-title">
+                    <span class="traversal-icon">1️⃣</span>
+                    <span>Recorrido Inorden</span>
+                </div>
+                <div class="traversal-subtitle">Izquierdo → Nodo → Derecho</div>
+            </div>
+            <div class="traversal-description">
+                <strong>Orden:</strong> ASCENDENTE por ID<br>
+                <strong>Uso:</strong> Mostrar elementos ordenados<br>
+                <strong>Implementación:</strong> Recursión (visita subárbol izquierdo, nodo actual, subárbol derecho)
+            </div>
+            <div class="traversal-list-full">
+                @{int index = 1;}
+                @foreach (var song in ViewBag.Inorden)
+                {
+                    <div class="traversal-item-full">
+                        <span class="item-number">@index.</span>
+                        <span class="item-id">[ID: @song.Id]</span>
+                        <span class="item-title">@song.Titulo</span>
+                        <span class="item-artist">@song.Artista</span>
+                        <span class="item-duration">@song.DuracionFormateada</span>
+                        <span class="item-popularity">@song.Popularidad%</span>
+                    </div>
+                    index++;
+                }
+            </div>
+        </div>
+    }
+    else if (tipoRecorrido == "preorden")
+    {
+        <div class="traversal-card-full">
+            <div class="traversal-header">
+                <div class="traversal-title">
+                    <span class="traversal-icon">2️⃣</span>
+                    <span>Recorrido Preorden</span>
+                </div>
+                <div class="traversal-subtitle">Nodo → Izquierdo → Derecho</div>
+            </div>
+            <div class="traversal-description">
+                <strong>Orden:</strong> RAÍZ primero<br>
+                <strong>Uso:</strong> Copiar estructura del árbol, crear copia del árbol<br>
+                <strong>Implementación:</strong> Recursión (visita nodo actual, subárbol izquierdo, subárbol derecho)
+            </div>
+            <div class="traversal-list-full">
+                @{int index = 1;}
+                @foreach (var song in ViewBag.Preorden)
+                {
+                    <div class="traversal-item-full">
+                        <span class="item-number">@index.</span>
+                        <span class="item-id">[ID: @song.Id]</span>
+                        <span class="item-title">@song.Titulo</span>
+                        <span class="item-artist">@song.Artista</span>
+                        <span class="item-duration">@song.DuracionFormateada</span>
+                        <span class="item-popularity">@song.Popularidad%</span>
+                    </div>
+                    index++;
+                }
+            </div>
+        </div>
+    }
+    else if (tipoRecorrido == "postorden")
+    {
+        <div class="traversal-card-full">
+            <div class="traversal-header">
+                <div class="traversal-title">
+                    <span class="traversal-icon">3️⃣</span>
+                    <span>Recorrido Postorden</span>
+                </div>
+                <div class="traversal-subtitle">Izquierdo → Derecho → Nodo</div>
+            </div>
+            <div class="traversal-description">
+                <strong>Orden:</strong> HOJAS primero<br>
+                <strong>Uso:</strong> Eliminar árbol, calcular expresiones, liberar memoria<br>
+                <strong>Implementación:</strong> Recursión (visita subárbol izquierdo, subárbol derecho, nodo actual)
+            </div>
+            <div class="traversal-list-full">
+                @{int index = 1;}
+                @foreach (var song in ViewBag.Postorden)
+                {
+                    <div class="traversal-item-full">
+                        <span class="item-number">@index.</span>
+                        <span class="item-id">[ID: @song.Id]</span>
+                        <span class="item-title">@song.Titulo</span>
+                        <span class="item-artist">@song.Artista</span>
+                        <span class="item-duration">@song.DuracionFormateada</span>
+                        <span class="item-popularity">@song.Popularidad%</span>
+                    </div>
+                    index++;
+                }
+            </div>
+        </div>
+    }
+    else if (tipoRecorrido == "niveles")
+    {
+        <div class="traversal-card-full">
+            <div class="traversal-header">
+                <div class="traversal-title">
+                    <span class="traversal-icon">4️⃣</span>
+                    <span>Recorrido Por Niveles (BFS)</span>
+                </div>
+                <div class="traversal-subtitle">Nivel por Nivel, Izquierda → Derecha</div>
+            </div>
+            <div class="traversal-description">
+                <strong>Orden:</strong> NIVEL por NIVEL<br>
+                <strong>Uso:</strong> Búsqueda por niveles, encontrar nodo más cercano a raíz<br>
+                <strong>Implementación:</strong> Iterativo con Queue&lt;Node&gt; (BFS - Breadth First Search)
+            </div>
+            <div class="traversal-list-full">
+                @{int index = 1;}
+                @foreach (var song in ViewBag.PorNiveles)
+                {
+                    <div class="traversal-item-full">
+                        <span class="item-number">@index.</span>
+                        <span class="item-id">[ID: @song.Id]</span>
+                        <span class="item-title">@song.Titulo</span>
+                        <span class="item-artist">@song.Artista</span>
+                        <span class="item-duration">@song.DuracionFormateada</span>
+                        <span class="item-popularity">@song.Popularidad%</span>
+                    </div>
+                    index++;
+                }
+            </div>
+        </div>
+    }
+</div>
+
 <style>
-.traversal-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    margin-top: 2.5rem;
+.selector-container {
+    margin: 2rem 0;
 }
 
-.traversal-card {
+.selector-container h2 {
+    color: #1DB954;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.selector-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.selector-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 2px solid rgba(29, 185, 84, 0.2);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.selector-btn:hover {
+    border-color: #1DB954;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(29, 185, 84, 0.3);
+}
+
+.selector-btn.active {
+    border-color: #1DB954;
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.2) 0%, rgba(29, 185, 84, 0.1) 100%);
+    box-shadow: 0 0 20px rgba(29, 185, 84, 0.4);
+}
+
+.selector-btn .btn-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.selector-btn .btn-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1DB954;
+    margin-bottom: 0.25rem;
+}
+
+.selector-btn .btn-subtitle {
+    font-size: 0.85rem;
+    color: #b3b3b3;
+    font-style: italic;
+}
+
+.traversal-display {
+    margin-top: 2rem;
+}
+
+.traversal-card-full {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     border-radius: 16px;
-    padding: 2rem;
-    border: 2px solid rgba(29, 185, 84, 0.2);
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-.traversal-card:hover {
-    border-color: #1DB954;
-    transform: translateY(-8px);
-    box-shadow: 0 12px 35px rgba(29, 185, 84, 0.4);
+    padding: 2.5rem;
+    border: 2px solid #1DB954;
+    box-shadow: 0 8px 30px rgba(29, 185, 84, 0.3);
 }
 
 .traversal-header {
@@ -198,47 +296,28 @@
     min-width: 60px;
 }
 
-.traversal-list-container {
-    max-height: 450px;
-    overflow-y: auto;
-    padding-right: 0.5rem;
+.traversal-list-full {
+    margin-top: 2rem;
 }
 
-.traversal-list-container::-webkit-scrollbar {
-    width: 8px;
-}
-
-.traversal-list-container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-}
-
-.traversal-list-container::-webkit-scrollbar-thumb {
-    background: #1DB954;
-    border-radius: 10px;
-}
-
-.traversal-list-container::-webkit-scrollbar-thumb:hover {
-    background: #1ed760;
-}
-
-.traversal-item {
+.traversal-item-full {
     display: grid;
-    grid-template-columns: auto auto 1fr auto;
-    gap: 0.75rem;
+    grid-template-columns: auto auto 2fr 1.5fr auto auto;
+    gap: 1rem;
     align-items: center;
-    padding: 0.85rem 1rem;
+    padding: 1rem 1.5rem;
     margin-bottom: 0.75rem;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    border-left: 3px solid transparent;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
 }
 
-.traversal-item:hover {
+.traversal-item-full:hover {
     background: rgba(29, 185, 84, 0.2);
-    transform: translateX(8px);
+    transform: translateX(10px);
     border-left-color: #1DB954;
+    box-shadow: 0 4px 15px rgba(29, 185, 84, 0.2);
 }
 
 .item-number {
@@ -266,26 +345,37 @@
 
 .item-artist {
     color: #b3b3b3;
-    font-size: 0.85rem;
-    text-align: right;
+    font-size: 0.9rem;
+}
+
+.item-duration {
+    color: #1DB954;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.item-popularity {
+    color: #ffc107;
+    font-weight: bold;
+    font-size: 0.9rem;
 }
 
 @@media (max-width: 768px) {
-    .traversal-grid {
-        grid-template-columns: 1fr;
+    .selector-buttons {
+        grid-template-columns: 1fr 1fr;
     }
     
-    .traversal-item {
+    .traversal-item-full {
         grid-template-columns: auto 1fr;
         gap: 0.5rem;
     }
     
-    .item-id {
-        grid-column: 1 / -1;
-    }
-    
-    .item-artist {
-        text-align: left;
+    .item-id,
+    .item-title,
+    .item-artist,
+    .item-duration,
+    .item-popularity {
         grid-column: 1 / -1;
     }
 }

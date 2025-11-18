@@ -134,8 +134,12 @@ namespace MusicPlaylistWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Recorridos()
+        public IActionResult Recorridos(string? tipo)
         {
+            // Si no se especifica tipo, usar inorden por defecto
+            tipo = tipo?.ToLower() ?? "inorden";
+            
+            ViewBag.TipoRecorrido = tipo;
             ViewBag.Inorden = _playlistService.RecorridoInorden();
             ViewBag.Preorden = _playlistService.RecorridoPreorden();
             ViewBag.Postorden = _playlistService.RecorridoPostorden();
